@@ -1,0 +1,30 @@
+{
+  "name": "nightlife-app",
+  "version": "1.0.0",
+  "description": "Application for coordinating nightly events in your area.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meankraken/Nightlife-app.git"
+  },
+  "keywords": [
+    "MongoDB",
+    "Mongoose",
+    "Express",
+    "Node",
+    "React"
+  ],
+  "author": "Jeff Feng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meankraken/Nightlife-app/issues"
+  },
+  "homepage": "https://github.com/meankraken/Nightlife-app#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
