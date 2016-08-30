@@ -1,9 +1,29 @@
 doctype html 
 
 head
-	title Test
-	
+	title BarHopShop
+	link(rel="stylesheet" href="/public/styles/main.css")
+	link(rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Abel")
+	link(rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato")
 
 body
-	div.app Yeah
+	div.topBanner
+		div#intro
+			h3 Welcome to the BarHopShop. Browse bars around your place of dwelling, plan, meet, and be merry!
+		div#menu
+				div.item 
+					a(href='/') HOME
+				div.item 
+					a(href='/login') LOGIN
+				div.item 
+					a(href='/register') REGISTER
+				div.item 
+					a(href='/contact') CONTACT
+		form#locationForm(action='/' method='POST')
+			input.searchBox(name='location' type='text' placeholder='GO')
+		
+	div#mask
+		div#content
+			div.container.app
+		
 	script(src='build/bundle.js' type='text/javascript')
