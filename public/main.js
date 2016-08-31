@@ -17,6 +17,7 @@ $(document).ready(function() {
 				$(this).css("border-color","#1671CC");
 				$(this).css("width","30px");
 				$(this).attr("placeholder", "GO");
+				$(this).val("");
 			}.bind(this),500);
 		}	
 	});
@@ -26,19 +27,66 @@ $(document).ready(function() {
 		$(this).css("width","30px");
 		$(this).attr("placeholder", "GO");
 		$(this).css("box-shadow","");
+		$(this).val("");
 	}); 
-
+	
+	$(document).on('mouseenter', '.barBox', function() {
+		$(this).animate({width:"+=50",height:"+=25"},250);
+	});
+	$(document).on('mouseleave', '.barBox', function() {
+		$(this).animate({width:"-=50",height:"-=25"},250);
+	});
 	
 });
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = { bars: [] };
+	}
+	
+	componentDidMount() {
+		if (barList!="none") {
+			var bars = JSON.parse(barList);
+			this.setState({ bars: bars.businesses.slice() });
+		}
 	}
 	
 	render() {
-		return <div>Test</div>;
+			return <div>
+				{
+					this.state.bars.map(function(bar) {
+						return <BarBox rating={bar.rating} ratingImg={bar.rating_img_url} name={bar.name} url={bar.url} img={bar.image_url} id={bar.id} key={bar.id}/>; 
+					})
+				}
+			</div>;
+		
 	}
 }
 
-//ReactDOM.render(<App/>, document.querySelector(".app"));
+class BarBox extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+	
+	render() {
+		return (
+			<div className="barBox">
+				{this.props.name}
+				<hr/>
+			</div>
+			
+			
+		);
+	}
+}
+
+ReactDOM.render(<App/>, document.querySelector(".app"));
+
+
+
+
+
+
+
+

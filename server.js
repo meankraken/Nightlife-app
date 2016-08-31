@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 
 app.get('/', function(req,res) {
-	res.render('index');
+	res.render('index', { bars: "none" } );
 	
 });
 
@@ -63,7 +63,7 @@ app.post('/', function(req,res) {
 			console.log(err);
 		}
 		else {
-			console.log(response);
+			res.render('index', { bars: body });
 		}
 		
 	});

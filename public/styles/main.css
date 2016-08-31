@@ -99,8 +99,26 @@ input.searchBox {
 	transform:translate(-50%,0);
 }
 
+.barBox {
+	margin:auto;
+	height:125px;
+	width:70%;
+	border:3px inset #66C6E3;
+	margin-top:25px;
+	background-color:rgba(71,75,77,.5);
+	color:#3691C9;
+	border-radius:10px;
+	box-shadow: -2px -2px 5px 1px #DAEFF5;
+	text-align:center;
+	font-family:Bevan;
+	font-size:1.2em;
+}
 
-
+.barBox hr {
+	position:relative;
+	width:15%;
+	bottom:10px;
+}
 
 
 

@@ -86,6 +86,7 @@
 					(0, _jquery2.default)(this).css("border-color", "#1671CC");
 					(0, _jquery2.default)(this).css("width", "30px");
 					(0, _jquery2.default)(this).attr("placeholder", "GO");
+					(0, _jquery2.default)(this).val("");
 				}.bind(this), 500);
 			}
 		});
@@ -95,6 +96,14 @@
 			(0, _jquery2.default)(this).css("width", "30px");
 			(0, _jquery2.default)(this).attr("placeholder", "GO");
 			(0, _jquery2.default)(this).css("box-shadow", "");
+			(0, _jquery2.default)(this).val("");
+		});
+	
+		(0, _jquery2.default)(document).on('mouseenter', '.barBox', function () {
+			(0, _jquery2.default)(this).animate({ width: "+=50", height: "+=25" }, 250);
+		});
+		(0, _jquery2.default)(document).on('mouseleave', '.barBox', function () {
+			(0, _jquery2.default)(this).animate({ width: "-=50", height: "-=25" }, 250);
 		});
 	});
 	
@@ -104,16 +113,29 @@
 		function App(props) {
 			_classCallCheck(this, App);
 	
-			return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+			var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	
+			_this.state = { bars: [] };
+			return _this;
 		}
 	
 		_createClass(App, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				if (barList != "none") {
+					var bars = JSON.parse(barList);
+					this.setState({ bars: bars.businesses.slice() });
+				}
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
 					null,
-					'Test'
+					this.state.bars.map(function (bar) {
+						return _react2.default.createElement(BarBox, { rating: bar.rating, ratingImg: bar.rating_img_url, name: bar.name, url: bar.url, img: bar.image_url, id: bar.id, key: bar.id });
+					})
 				);
 			}
 		}]);
@@ -121,7 +143,31 @@
 		return App;
 	}(_react2.default.Component);
 	
-	//ReactDOM.render(<App/>, document.querySelector(".app"));
+	var BarBox = function (_React$Component2) {
+		_inherits(BarBox, _React$Component2);
+	
+		function BarBox(props) {
+			_classCallCheck(this, BarBox);
+	
+			return _possibleConstructorReturn(this, (BarBox.__proto__ || Object.getPrototypeOf(BarBox)).call(this, props));
+		}
+	
+		_createClass(BarBox, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'barBox' },
+					this.props.name,
+					_react2.default.createElement('hr', null)
+				);
+			}
+		}]);
+	
+		return BarBox;
+	}(_react2.default.Component);
+	
+	_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector(".app"));
 
 /***/ },
 /* 1 */
