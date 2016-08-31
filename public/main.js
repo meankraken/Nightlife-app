@@ -27,6 +27,7 @@ $(document).ready(function() {
 		$(this).attr("placeholder", "GO");
 		$(this).css("box-shadow","");
 	}); 
+
 	
 });
 
