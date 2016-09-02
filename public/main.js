@@ -37,10 +37,7 @@ $(document).ready(function() {
 		$(this).animate({width:"-=50",height:"-=25"},250);
 	});
 	
-<<<<<<< HEAD
 	
-=======
->>>>>>> 666565eddaa773e3f64618760379563a80d9f5bd
 });
 
 class App extends React.Component {
