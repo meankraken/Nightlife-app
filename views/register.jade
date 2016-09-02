@@ -1,0 +1,30 @@
+extends login
+
+block headContent
+        title Register now!
+        link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel='stylesheet')
+        link(href="/public/styles/loginCSS.css" rel='stylesheet')
+        script(src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js")
+        script(src='/public/registerScript.js')    
+        
+block bodyContent
+        div.container#registerContainer  
+            div#top-text
+                h3#big-text Register below to start hopping.
+                br
+                br
+            div#content
+                form#theForm(action='/register' method='post')
+                    label Username
+                    input#userBox(class='form-control' type='text' name='username' placeholder='Enter your desired username' style="width:500px")
+                    br
+                    label Password
+                    input#passBox(class='form-control' type='password' name='password' placeholder='Create a password' style="width:500px")
+                    br
+                    input.btn.btn-primary(type='submit' value='Submit')
+            - if (taken) {
+                p#takenText The selected username is already in use. Please select another username and retry. 
+            - }
+
+
+

@@ -1,0 +1,133 @@
+body {
+	padding:0;
+	margin:0;
+	height:1200px;
+}
+
+.topBanner {
+	float:left;
+	position:fixed;
+	display:block;
+	height:100px;
+	width:100%;
+	background:linear-gradient(#171313, #302C2C);
+	z-index:99;
+}
+
+#intro {
+	width:450px;
+} 
+
+h3 {
+	color:white;
+	font-family:Abel;
+	margin-left:15px;
+	
+}
+
+#menu {
+	position:absolute;
+	right:20px;
+	top:23px;
+}
+
+a {
+	text-decoration:none;
+	color:#B8BEBF;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+a:visited {
+	text-decoration:none;
+}
+
+.item {
+	display:inline-block;
+	margin-left:15px;
+	color:#B8BEBF;
+	font-family:Lato;
+	
+}
+
+#locationForm {
+	position:absolute;
+	bottom:15px;
+	left:50%;
+	transform:translate(-50%,0);
+}
+
+input.searchBox {
+	width:25px;
+	height:15px;
+	border:3px solid #1671CC;
+	border-radius:15px;
+	background-color:#423C3C;
+	color:white;
+	padding:5px;
+	text-align:center;
+	font-family:sans serif;
+	cursor:pointer;
+	transition:width .25s linear;
+}
+
+#mask {
+	display:block;
+	position:relative;
+	height:1200px;
+	width:100%;
+	opacity:.7;
+	top:100px;
+}
+
+#content {
+	background-image: url('/public/imgs/bar.jpg');
+	height:100%;
+	width:100%;
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+
+.app {
+	position:absolute;
+	display:block;
+	width:75%;
+	height:100%;
+	margin-left:50%;
+	transform:translate(-50%,0);
+}
+
+.barBox {
+	margin:auto;
+	height:125px;
+	width:70%;
+	border:3px inset #66C6E3;
+	margin-top:25px;
+	background-color:rgba(71,75,77,.5);
+	color:#3691C9;
+	border-radius:10px;
+	box-shadow: -2px -2px 5px 1px #DAEFF5;
+	text-align:center;
+	font-family:Bevan;
+	font-size:1.2em;
+}
+
+.barBox hr {
+	position:relative;
+	width:15%;
+	bottom:10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

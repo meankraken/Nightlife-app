@@ -1,0 +1,125 @@
+.topBanner {
+	float:left;
+	position:fixed;
+	display:block;
+	height:100px;
+	width:100%;
+	background:linear-gradient(#171313, #302C2C);
+	z-index:99;
+	top:0;
+}
+
+#intro {
+	width:450px;
+} 
+
+h3 {
+	color:white;
+	font-family:Abel;
+	margin-left:15px;
+	font-size:1.5em;
+}
+
+#menu {
+	position:absolute;
+	right:20px;
+	top:23px;
+}
+
+a {
+	text-decoration:none;
+	color:#B8BEBF;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+a:visited {
+	text-decoration:none;
+}
+
+.item {
+	display:inline-block;
+	margin-left:15px;
+	color:#B8BEBF;
+	font-family:Lato;
+	
+}
+
+#loginForm {
+	margin-top:150px;
+}
+
+
+#locationForm {
+	display:none;
+}
+
+#loginNowText {
+	text-align:center;
+}
+
+#loginButton {
+	display:block;
+	width:70px;
+	margin-left:50%;
+	transform:translate(-50%,0);
+}
+
+#failMessage {
+	width:100%;
+	display:block;
+	text-align:center;
+	color:red;
+	padding:10px;
+}
+
+#big-text {
+	text-align:center;
+	color:black;
+}
+
+#registerContainer {
+	padding-top:50px;
+}
+
+#takenText {
+	color:red;
+	margin-top:200px;
+	text-align:center;
+	margin-left:50px;
+}
+
+#endText {
+	padding:15px;
+	text-align:center;
+	font-size:1.3em;
+	margin-left:15px;
+}
+
+#registerContainer {
+	margin-top:75px;
+}
+
+#content {
+	position:relative;
+	
+}
+
+#theForm {
+	display:inline-block;
+	position:absolute;
+	margin-left:30%;
+	
+}
+
+.btn {
+	position:block;
+	margin-left:50%;
+	transform:translate(-50%,0);
+}
+
+.form-horizontal {
+	margin-left:25px;
+}
