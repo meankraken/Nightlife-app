@@ -22,6 +22,7 @@ app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/build', express.static(process.cwd() + '/build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
+<<<<<<< HEAD
 app.use(session({
 	secret: 'topsecret',
     resave:'false',
@@ -49,6 +50,16 @@ app.get('/', function(req,res) {
 	
 });
 
+=======
+
+
+app.get('/', function(req,res) {
+	res.render('index', { bars: "none" } );
+	
+});
+
+
+>>>>>>> 666565eddaa773e3f64618760379563a80d9f5bd
 app.post('/', function(req,res) {
 	var date = Math.floor(Date.now()/1000);
 	var httpRequest = 'GET';
@@ -82,18 +93,23 @@ app.post('/', function(req,res) {
 			console.log(err);
 		}
 		else {
+<<<<<<< HEAD
 			if (req.user) {
 				res.render('index', { user:req.user.username, bars: body });
 			}
 			else {
 				res.render('index', { user:"", bars: body });
 			}
+=======
+			res.render('index', { bars: body });
+>>>>>>> 666565eddaa773e3f64618760379563a80d9f5bd
 		}
 		
 	});
 	
 });
 
+<<<<<<< HEAD
 app.get('/login', function(req,res) {
 	if (req.query.failed) {
 		res.render('login', { failed:true });
@@ -125,6 +141,8 @@ app.post('/register', function(req,res) {
 		}
 	});
 });
+=======
+>>>>>>> 666565eddaa773e3f64618760379563a80d9f5bd
 
 app.listen(port);
 
