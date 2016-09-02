@@ -121,7 +121,9 @@ app.post('/register', function(req,res) {
 			res.render('register', { taken:true });
 		}
 		else {
-			passport.authenticate('local', {sucessRedirect:'/', failureRedirect:'/register'});
+			req.login(account, function(err) {
+				res.redirect('/');
+			});
 		}
 	});
 });

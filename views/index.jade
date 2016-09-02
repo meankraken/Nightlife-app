@@ -12,6 +12,7 @@ head
 			var barList = !{JSON.stringify(bars).replace(/<\//g, '<\\/')};
 			$(document).ready(function() {
 				var name = !{JSON.stringify(user)};
+				console.log(name);
 				if (name.length>0) {
 					var str = "<a href='/profile'>" + name + "</a>";
 					$('.item:nth-child(2)').html(str);
