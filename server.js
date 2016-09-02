@@ -41,7 +41,19 @@ mongoose.connect(dbURL);
 
 app.get('/', function(req,res) {
 	if (req.user) {
-		res.render('index', { user: req.user.username, bars: "none" } );
+		if (req.query.auth = "true") {
+			if (req.session.bars) {
+				var temp = req.session.bars; 
+				req.session.bars = "none";
+				res.render('index', { user: req.user.username, bars: temp } );
+			}
+			else {
+				res.render('index', { user: req.user.username, bars: "none" } );
+			}
+		}
+		else {
+			res.render('index', { user: req.user.username, bars: "none" } );
+		}
 	}
 	else {
 		res.render('index', { user: "", bars: "none" } );
@@ -86,6 +98,7 @@ app.post('/', function(req,res) {
 				res.render('index', { user:req.user.username, bars: body });
 			}
 			else {
+				req.session.bars = body; 
 				res.render('index', { user:"", bars: body });
 			}
 		}
@@ -96,29 +109,34 @@ app.post('/', function(req,res) {
 
 app.get('/login', function(req,res) {
 	if (req.query.failed) {
-		res.render('login', { failed:true });
+		res.render('login', { user:"", failed:true });
 	}
 	else {
-		res.render('login');
+		res.render('login', { user:"" });
 	}
 	
 });
 
 app.post('/login', passport.authenticate('local',{
-	successRedirect: '/',
+	successRedirect: '/?auth=true',
 	failureRedirect: '/login?failed=true'
 	
 }));
 
 app.get('/register', function(req,res) {
-	res.render('register');
+	if (req.user) {
+		res.render('register', { user:req.user.username });
+	}
+	else {
+		res.render('register', { user:"" });
+	}
 });
 
 app.post('/register', function(req,res) {
 	Account.register(new Account({username:req.body.username}), req.body.password, function(err, account) {
 		if (err) {
 			console.log(err);
-			res.render('register', { taken:true });
+			res.render('register', { user:"", taken:true });
 		}
 		else {
 			req.login(account, function(err) {

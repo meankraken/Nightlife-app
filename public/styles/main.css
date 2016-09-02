@@ -100,6 +100,7 @@ input.searchBox {
 }
 
 .barBox {
+	position:relative;
 	margin:auto;
 	height:125px;
 	width:70%;
@@ -110,14 +111,46 @@ input.searchBox {
 	border-radius:10px;
 	box-shadow: -2px -2px 5px 1px #DAEFF5;
 	text-align:center;
-	font-family:Bevan;
+	cursor:pointer;
+	
+}
+
+.barBox .barName {
+	font-family:Carter One;
 	font-size:1.2em;
+	color:#17C3FC;
 }
 
 .barBox hr {
 	position:relative;
 	width:15%;
 	bottom:10px;
+
+}
+
+.barBox img {
+	position:absolute;
+	top:25px;
+	border-radius:10px;
+	left:5px;
+}
+
+.rating {
+	margin-left:7px;
+}
+
+.snipBox {
+	position:absolute;
+	width:75%;
+	top:25px;
+	left:125px;
+	text-align:center;
+}
+
+.snippet {
+	color:white;
+	font-family:Snippet;
+	font-size:1.1em;
 }
 
 

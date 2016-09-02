@@ -134,7 +134,7 @@
 					'div',
 					null,
 					this.state.bars.map(function (bar) {
-						return _react2.default.createElement(BarBox, { rating: bar.rating, ratingImg: bar.rating_img_url, name: bar.name, url: bar.url, img: bar.image_url, id: bar.id, key: bar.id });
+						return _react2.default.createElement(BarBox, { rating: bar.rating, snippet: bar.snippet_text, ratingImg: bar.rating_img_url, name: bar.name, url: bar.url, img: bar.image_url, id: bar.id, key: bar.id });
 					})
 				);
 			}
@@ -158,8 +158,23 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'barBox' },
-					this.props.name,
-					_react2.default.createElement('hr', null)
+					_react2.default.createElement(
+						'span',
+						{ className: 'barName' },
+						this.props.name
+					),
+					_react2.default.createElement('hr', null),
+					_react2.default.createElement('img', { src: this.props.img }),
+					_react2.default.createElement('img', { className: 'rating', src: this.props.ratingImg }),
+					_react2.default.createElement(
+						'div',
+						{ className: 'snipBox' },
+						_react2.default.createElement(
+							'p',
+							{ className: 'snippet' },
+							this.props.snippet
+						)
+					)
 				);
 			}
 		}]);
@@ -297,25 +312,40 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 	
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
 	(function () {
 	    try {
-	        cachedSetTimeout = setTimeout;
-	    } catch (e) {
-	        cachedSetTimeout = function () {
-	            throw new Error('setTimeout is not defined');
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
 	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
 	    }
 	    try {
-	        cachedClearTimeout = clearTimeout;
-	    } catch (e) {
-	        cachedClearTimeout = function () {
-	            throw new Error('clearTimeout is not defined');
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
 	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
 	    }
 	} ())
 	function runTimeout(fun) {
 	    if (cachedSetTimeout === setTimeout) {
 	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
 	        return setTimeout(fun, 0);
 	    }
 	    try {
@@ -336,6 +366,11 @@
 	function runClearTimeout(marker) {
 	    if (cachedClearTimeout === clearTimeout) {
 	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
 	        return clearTimeout(marker);
 	    }
 	    try {

@@ -57,7 +57,7 @@ class App extends React.Component {
 			return <div>
 				{
 					this.state.bars.map(function(bar) {
-						return <BarBox rating={bar.rating} ratingImg={bar.rating_img_url} name={bar.name} url={bar.url} img={bar.image_url} id={bar.id} key={bar.id}/>; 
+						return <BarBox rating={bar.rating} snippet={bar.snippet_text} ratingImg={bar.rating_img_url} name={bar.name} url={bar.url} img={bar.image_url} id={bar.id} key={bar.id}/>; 
 					})
 				}
 			</div>;
@@ -73,8 +73,13 @@ class BarBox extends React.Component {
 	render() {
 		return (
 			<div className="barBox">
-				{this.props.name}
+				<span className="barName">{this.props.name}</span>
 				<hr/>
+				<img src={this.props.img}/>
+				<img className="rating" src={this.props.ratingImg}/>
+				<div className="snipBox">
+					<p className="snippet">{this.props.snippet}</p>
+				</div>
 			</div>
 			
 			
