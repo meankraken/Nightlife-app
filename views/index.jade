@@ -5,14 +5,15 @@ head
 	link(rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Abel")
 	link(rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato")
 	link(rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Carter One")
-	link(rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Snippet")
+	link(rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Marvel")
+	link(rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Play")
 	script.
 		$(document).ready(function() {
 				var name = !{JSON.stringify(user)};
-				var arr = name.split("");
-				arr[0] = arr[0].toUpperCase();
-				name = arr.join("");
 				if (name.length>0) {
+					var arr = name.split("");
+					arr[0] = arr[0].toUpperCase();
+					name = arr.join("");
 					var str = "<a href='/profile'>" + name + "</a>";
 					$('.item:nth-child(2)').html(str);
 				}

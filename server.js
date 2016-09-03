@@ -31,9 +31,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 var Account = require('./models/account.js');
+var AttendedBar = require('./models/barsAttended.js');
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
+
+
 
 var dbURL = process.env.MONGOLAB_URI || 'mongodb://localhost/MyDataBase';
 
@@ -105,6 +108,79 @@ app.post('/', function(req,res) {
 		
 	});
 	
+});
+
+app.get('/getAttendees', function(req,res) { //api for getting attended bars
+	var arr = req.query.businesses; 
+	var ids = arr.map(function(bar) {
+		return bar.id;
+	});
+	AttendedBar.find({bar_id: { $in: ids }}, function(err, docs) {
+		var day = new Date();
+		var docHolder = [];
+		docs.forEach(function(doc) {
+			if (day.getDay()!=doc.date.getDay()) { //need to clear attended bars on new days
+				doc.remove(); 
+			}
+			else {
+				if (day.getMonth()==doc.date.getMonth()) { 
+					docHolder.push(doc);
+				}
+				else {
+					doc.remove();
+				}
+			}
+		});
+		if (docHolder.length==0) {
+			var obj = { "payload":"none" };
+			res.end(JSON.stringify(obj));
+		}
+		else {
+			if (req.user) {
+				res.end(JSON.stringify({"payload": docs, "user": req.user.username }));
+			}
+			else {
+				res.end(JSON.stringify({"payload": docs, "user": "none" }));
+			}
+		}
+	});
+	
+});
+
+app.get('/attendingBar', function(req,res) { //handle changing bar counters
+	var id = req.query.theID;
+	if (!req.user) {
+		res.end(JSON.stringify({"payload":"login"})); //if user not logged, need to login first
+	}
+	else {
+		AttendedBar.findOne({bar_id: id}, function(err, doc) {
+			var day = new Date();
+			if (doc==null) { //bar is not attended yet
+				var arr = [];
+				arr.push(req.user.username);
+				var newBar = new AttendedBar({ bar_id: id, attendees: arr.slice(), count: 1, date: day });
+				newBar.save();
+				res.end(JSON.stringify({"payload":"success"}));
+			}
+			else { //bar is already attended
+				if (doc.attendees.indexOf(req.user.username)>-1) { //user already attending
+					var index = doc.attendees.indexOf(req.user.username);
+					doc.attendees.splice(index,1);
+					doc.count = doc.count - 1;
+					doc.save();
+					res.end(JSON.stringify({"payload":"unattended"}));
+				}
+				else { //user not attending yet 
+					doc.attendees.push(req.user.username);
+					doc.count = doc.count + 1;
+					doc.date = day; 
+					doc.save();
+					res.end(JSON.stringify({"payload":"success"}));
+				}
+			}
+		});
+	}
+		
 });
 
 app.get('/login', function(req,res) {

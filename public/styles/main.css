@@ -149,8 +149,32 @@ input.searchBox {
 
 .snippet {
 	color:white;
-	font-family:Snippet;
-	font-size:1.1em;
+	font-family:Marvel;
+	font-size:1.2em;
+}
+
+.goingBtn {
+	position:absolute;
+	border:1px solid white;
+	height:20px;
+	width:100px;
+	bottom:5px;
+	margin-left:50%;
+	transform:translate(-50%,0);
+	font-size:.8em;
+	color:white;
+	line-height:20px;
+	font-family:Play;
+}
+
+.counter {
+	color:#50E3E6;
+	font-size:1.2em;
+}
+
+.going {
+	color:green;
+	border-color:green;
 }
 
 

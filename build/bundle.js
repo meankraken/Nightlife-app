@@ -105,6 +105,15 @@
 		(0, _jquery2.default)(document).on('mouseleave', '.barBox', function () {
 			(0, _jquery2.default)(this).animate({ width: "-=50", height: "-=25" }, 250);
 		});
+	
+		(0, _jquery2.default)(document).on('mouseenter', '.goingBtn', function () {
+			(0, _jquery2.default)(this).css("border-color", "black");
+			(0, _jquery2.default)(this).css("color", "black");
+		});
+		(0, _jquery2.default)(document).on('mouseleave', '.goingBtn', function () {
+			(0, _jquery2.default)(this).css("border-color", "");
+			(0, _jquery2.default)(this).css("color", "");
+		});
 	});
 	
 	var App = function (_React$Component) {
@@ -115,7 +124,9 @@
 	
 			var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 	
-			_this.state = { bars: [] };
+			_this.state = { bars: [], attendees: [], userAttending: "none" };
+			_this.decrementCount = _this.decrementCount.bind(_this);
+			_this.incrementCount = _this.incrementCount.bind(_this);
 			return _this;
 		}
 	
@@ -124,18 +135,77 @@
 			value: function componentDidMount() {
 				if (barList != "none") {
 					var bars = JSON.parse(barList);
-					this.setState({ bars: bars.businesses.slice() });
+					_jquery2.default.ajax({
+						url: '/getAttendees',
+						data: bars,
+						dataType: 'json',
+						success: function (data) {
+							if (data.payload == "none") {
+								//none attended, just send the bars from the Yelp api call
+								this.setState({ bars: bars.businesses.slice() });
+							} else {
+								//attendees holds attended bars data
+								var attending = "none";
+								data.payload.forEach(function (item) {
+									if (item.attendees.indexOf(data.user) >= 0) {
+										//if user already attending a bar, set userAttending
+										attending = item.bar_id;
+									}
+								});
+								this.setState({ bars: bars.businesses.slice(), attendees: data.payload.slice(), userAttending: attending });
+							}
+						}.bind(this),
+						error: function error(err) {
+							console.log("Error pulling attended bars.");
+						}
+	
+					});
 				}
+			}
+		}, {
+			key: 'decrementCount',
+			value: function decrementCount(id) {
+				//decrease count of bar with id
+				var index = 0;
+				for (var i = 0; i < this.state.attendees.length; i++) {
+					if (this.state.attendees[i].bar_id == id) {
+						index = i;
+					}
+				}
+				var arr = this.state.attendees.slice();
+				arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count - 1, date: arr[index].date };
+				this.setState({ attendees: arr.slice(), userAttending: "none" });
+			}
+		}, {
+			key: 'incrementCount',
+			value: function incrementCount(id) {
+				//increase count of bar with id 
+				var index = 0;
+				for (var i = 0; i < this.state.attendees.length; i++) {
+					if (this.state.attendees[i].bar_id == id) {
+						index = i;
+					}
+				}
+				var arr = this.state.attendees.slice();
+				arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count + 1, date: arr[index].date };
+				this.setState({ attendees: arr.slice(), userAttending: id });
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+				var arr = this.state.attendees.slice();
 				return _react2.default.createElement(
 					'div',
 					null,
 					this.state.bars.map(function (bar) {
-						return _react2.default.createElement(BarBox, { rating: bar.rating, snippet: bar.snippet_text, ratingImg: bar.rating_img_url, name: bar.name, url: bar.url, img: bar.image_url, id: bar.id, key: bar.id });
-					})
+						var count = 0;
+						arr.forEach(function (item) {
+							if (item.bar_id == bar.id) {
+								count = item.count;
+							}
+						});
+						return _react2.default.createElement(BarBox, { rating: bar.rating, num_attending: count, userAttending: this.state.userAttending, snippet: bar.snippet_text, ratingImg: bar.rating_img_url, name: bar.name, url: bar.url, img: bar.image_url, id: bar.id, key: bar.id, decrementCount: this.decrementCount, incrementCount: this.incrementCount });
+					}.bind(this))
 				);
 			}
 		}]);
@@ -153,6 +223,45 @@
 		}
 	
 		_createClass(BarBox, [{
+			key: 'attending',
+			value: function attending() {
+				//click event for attending/unattending a bar 
+				if (this.props.userAttending != "none" && this.props.userAttending != this.props.id) {
+					alert("You have already committed to another bar!");
+				} else {
+					_jquery2.default.ajax({
+						url: '/attendingBar',
+						data: { theID: this.props.id },
+						dataType: 'json',
+						success: function (data) {
+							if (data.payload == "login") {
+								alert("You must be logged in to attend.");
+							} else if (data.payload == "unattended") {
+								//unattending bar
+								this.props.decrementCount(this.props.id);
+							} else {
+								//attending
+								this.props.incrementCount(this.props.id);
+							}
+						}.bind(this),
+						error: function error(err) {
+							console.log("Error changing attendees.");
+						}
+	
+					});
+				}
+			}
+		}, {
+			key: 'getClasses',
+			value: function getClasses() {
+				//set style of the attending button based on if user is going
+				if (this.props.userAttending == this.props.id) {
+					return "goingBtn going";
+				} else {
+					return "goingBtn";
+				}
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -173,6 +282,20 @@
 							'p',
 							{ className: 'snippet' },
 							this.props.snippet
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ onClick: this.attending.bind(this), className: this.getClasses() },
+						_react2.default.createElement(
+							'span',
+							null,
+							'ATTENDING: '
+						),
+						_react2.default.createElement(
+							'span',
+							{ className: 'counter' },
+							this.props.num_attending
 						)
 					)
 				);
