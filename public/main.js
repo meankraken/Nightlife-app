@@ -94,27 +94,13 @@ class App extends React.Component {
 		}
 	}
 	
-	decrementCount(id) { //decrease count of bar with id
-		if (this.state.attendees.length<=0) {
-			//this.setState({ attendees: [] });
-		}
-		else {
-			var index = 0;
-			for (var i=0; i<this.state.attendees.length; i++) {
-				if (this.state.attendees[i].bar_id == id) {
-					index = i;
-				}
-			}
-			var arr = this.state.attendees.slice();
-			arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count - 1, date: arr[index].date };
-			this.setState({ attendees: arr.slice(), userAttending: "none"});
-		}
-		
-	}
-	
-	incrementCount(id) { //increase count of bar with id 
-		if (this.state.attendees.length<=0) {
-			//this.setState({ attendees: [] });
+	incrementCount(id, user) { //increase count of bar with id 
+		if (this.state.attendees.length<=0) { //handle case for first doc
+			var arr = [];
+			var attends = [];
+			attends.push(user);
+			arr.push({ bar_id: id, attendees: attends.slice(), count: 1, date: new Date() });
+			this.setState({ attendees: arr.slice(), userAttending: id});
 		}
 		else {
 			var index = 0;
@@ -129,6 +115,24 @@ class App extends React.Component {
 			arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count + 1, date: arr[index].date };
 			this.setState({ attendees: arr.slice(), userAttending: id});
 		}
+	}
+	
+	decrementCount(id) { //decrease count of bar with id
+		if (this.state.attendees.length<=0) { //handle case for first doc
+			//not needed
+		}
+		else {
+			var index = 0;
+			for (var i=0; i<this.state.attendees.length; i++) {
+				if (this.state.attendees[i].bar_id == id) {
+					index = i;
+				}
+			}
+			var arr = this.state.attendees.slice();
+			arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count - 1, date: arr[index].date };
+			this.setState({ attendees: arr.slice(), userAttending: "none"});
+		}
+		
 	}
 	
 	render() {
@@ -173,7 +177,7 @@ class BarBox extends React.Component {
 					
 					}
 					else { //attending
-						this.props.incrementCount(this.props.id);
+						this.props.incrementCount(this.props.id, data.user);
 					}
 				}.bind(this),
 				error: function(err) {

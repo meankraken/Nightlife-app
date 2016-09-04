@@ -160,7 +160,7 @@ app.get('/attendingBar', function(req,res) { //handle changing bar counters
 				arr.push(req.user.username);
 				var newBar = new AttendedBar({ bar_id: id, attendees: arr.slice(), count: 1, date: day });
 				newBar.save();
-				res.end(JSON.stringify({"payload":"success"}));
+				res.end(JSON.stringify({"payload":"success", "user": req.user.username }));
 			}
 			else { //bar is already attended
 				if (doc.attendees.indexOf(req.user.username)>-1) { //user already attending

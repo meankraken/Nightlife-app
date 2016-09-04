@@ -167,29 +167,16 @@
 				}
 			}
 		}, {
-			key: 'decrementCount',
-			value: function decrementCount(id) {
-				//decrease count of bar with id
-				if (this.state.attendees.length <= 0) {
-					//this.setState({ attendees: [] });
-				} else {
-					var index = 0;
-					for (var i = 0; i < this.state.attendees.length; i++) {
-						if (this.state.attendees[i].bar_id == id) {
-							index = i;
-						}
-					}
-					var arr = this.state.attendees.slice();
-					arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count - 1, date: arr[index].date };
-					this.setState({ attendees: arr.slice(), userAttending: "none" });
-				}
-			}
-		}, {
 			key: 'incrementCount',
-			value: function incrementCount(id) {
+			value: function incrementCount(id, user) {
 				//increase count of bar with id 
 				if (this.state.attendees.length <= 0) {
-					//this.setState({ attendees: [] });
+					//handle case for first doc
+					var arr = [];
+					var attends = [];
+					attends.push(user);
+					arr.push({ bar_id: id, attendees: attends.slice(), count: 1, date: new Date() });
+					this.setState({ attendees: arr.slice(), userAttending: id });
 				} else {
 					var index = 0;
 					for (var i = 0; i < this.state.attendees.length; i++) {
@@ -202,6 +189,24 @@
 					console.log(arr);
 					arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count + 1, date: arr[index].date };
 					this.setState({ attendees: arr.slice(), userAttending: id });
+				}
+			}
+		}, {
+			key: 'decrementCount',
+			value: function decrementCount(id) {
+				//decrease count of bar with id
+				if (this.state.attendees.length <= 0) {//handle case for first doc
+					//not needed
+				} else {
+					var index = 0;
+					for (var i = 0; i < this.state.attendees.length; i++) {
+						if (this.state.attendees[i].bar_id == id) {
+							index = i;
+						}
+					}
+					var arr = this.state.attendees.slice();
+					arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count - 1, date: arr[index].date };
+					this.setState({ attendees: arr.slice(), userAttending: "none" });
 				}
 			}
 		}, {
@@ -255,7 +260,7 @@
 								this.props.decrementCount(this.props.id);
 							} else {
 								//attending
-								this.props.incrementCount(this.props.id);
+								this.props.incrementCount(this.props.id, data.user);
 							}
 						}.bind(this),
 						error: function error(err) {
