@@ -111,7 +111,7 @@ app.post('/', function(req,res) {
 
 app.get('/getAttendees', function(req,res) { //api for getting attended bars
 	console.log("A");
-	var arr = req.query.businesses; 
+	var arr = req.query; 
 	var ids = arr.map(function(bar) {
 		return bar.id;
 	});

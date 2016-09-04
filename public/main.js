@@ -63,7 +63,7 @@ class App extends React.Component {
 			var bars = JSON.parse(barList);
 			$.ajax({
 				url:'/getAttendees',
-				data:bars,
+				data:bars.businesses,
 				dataType:'json',
 				success:function(data) {
 					if (data.payload=="none") { //none attended, just send the bars from the Yelp api call
