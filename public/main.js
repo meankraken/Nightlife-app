@@ -115,6 +115,8 @@ class App extends React.Component {
 			}
 		}
 		var arr = this.state.attendees.slice();
+		console.log(index);
+		console.log(arr);
 		arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count + 1, date: arr[index].date };
 		this.setState({ attendees: arr.slice(), userAttending: id});
 	}
