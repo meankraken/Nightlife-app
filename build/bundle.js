@@ -180,6 +180,7 @@
 				} else {
 					console.log(id);
 					var index = 0;
+					console.log(this.state.attendees);
 					for (var i = 0; i < this.state.attendees.length; i++) {
 						if (this.state.attendees[i].bar_id == id) {
 							index = i;
