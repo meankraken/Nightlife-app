@@ -135,9 +135,13 @@
 			value: function componentDidMount() {
 				if (barList != "none") {
 					var bars = JSON.parse(barList);
+					var arr = bars.businesses.map(function (item) {
+						return item.id;
+					});
+					var obj = { "idArr": arr };
 					_jquery2.default.ajax({
 						url: '/getAttendees',
-						data: bars,
+						data: obj,
 						dataType: 'json',
 						success: function (data) {
 							if (data.payload == "none") {
