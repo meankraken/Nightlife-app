@@ -110,13 +110,14 @@ app.post('/', function(req,res) {
 });
 
 app.get('/getAttendees', function(req,res) { //api for getting attended bars
+	console.log("A");
 	var arr = req.query.businesses; 
 	var ids = arr.map(function(bar) {
 		return bar.id;
 	});
-	console.log("A");
+	console.log("B");
 	AttendedBar.find({bar_id: { $in: ids }}, function(err, docs) {
-		console.log("B");
+		console.log("C");
 		var day = new Date();
 		var docHolder = [];
 		docs.forEach(function(doc) {
