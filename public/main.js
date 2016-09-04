@@ -103,10 +103,8 @@ class App extends React.Component {
 			this.setState({ attendees: arr.slice(), userAttending: id});
 		}
 		else {
-			console.log(id);
 			var index = -1;
 			var arr = [];
-			console.log(this.state.attendees);
 			for (var i=0; i<this.state.attendees.length; i++) {
 				if (this.state.attendees[i].bar_id == id) {
 					index = i;
@@ -121,7 +119,6 @@ class App extends React.Component {
 			}
 			else {
 				arr = this.state.attendees.slice();
-				console.log(index);
 				arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count + 1, date: arr[index].date };
 				this.setState({ attendees: arr.slice(), userAttending: id});
 			}
@@ -175,7 +172,6 @@ class BarBox extends React.Component {
 			alert("You have already committed to another bar!");
 		}
 		else {
-			console.log("clicked on: " + this.props.id);
 			$.ajax({
 				url:'/attendingBar',
 				data:{theID: this.props.id},

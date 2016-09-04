@@ -149,7 +149,6 @@ app.get('/getAttendees', function(req,res) { //api for getting attended bars
 
 app.get('/attendingBar', function(req,res) { //handle changing bar counters
 	var id = req.query.theID;
-	console.log(id);
 	if (!req.user) {
 		res.end(JSON.stringify({"payload":"login"})); //if user not logged, need to login first
 	}

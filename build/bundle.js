@@ -178,10 +178,8 @@
 					arr.push({ bar_id: id, attendees: attends.slice(), count: 1, date: new Date() });
 					this.setState({ attendees: arr.slice(), userAttending: id });
 				} else {
-					console.log(id);
 					var index = -1;
 					var arr = [];
-					console.log(this.state.attendees);
 					for (var i = 0; i < this.state.attendees.length; i++) {
 						if (this.state.attendees[i].bar_id == id) {
 							index = i;
@@ -196,7 +194,6 @@
 						this.setState({ attendees: arr.slice(), userAttending: id });
 					} else {
 						arr = this.state.attendees.slice();
-						console.log(index);
 						arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count + 1, date: arr[index].date };
 						this.setState({ attendees: arr.slice(), userAttending: id });
 					}
@@ -259,7 +256,6 @@
 				if (this.props.userAttending != "none" && this.props.userAttending != this.props.id) {
 					alert("You have already committed to another bar!");
 				} else {
-					console.log("clicked on: " + this.props.id);
 					_jquery2.default.ajax({
 						url: '/attendingBar',
 						data: { theID: this.props.id },
