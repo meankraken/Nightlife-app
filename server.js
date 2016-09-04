@@ -81,8 +81,8 @@ app.post('/', function(req,res) {
 		
 	};
 	
-	var consumerSecret = process.env.CONSUMER_SECRET || 'xvvNvYGRR-5L87xfCj7HPwSsKpI';
-	var tokenSecret = process.env.TOKEN_SECRET || 'qzmYnEymMxLAJjImYLiZ2i6yDd0';
+	var consumerSecret = process.env.CONSUMER_SECRET;
+	var tokenSecret = process.env.TOKEN_SECRET;
 
 	var sig = oauthSignature.generate(httpRequest, yelpUrl, apiParams, consumerSecret, tokenSecret, { encodeSignature: false} ); //get the signature
 	
