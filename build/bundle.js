@@ -248,6 +248,7 @@
 				if (this.props.userAttending != "none" && this.props.userAttending != this.props.id) {
 					alert("You have already committed to another bar!");
 				} else {
+					console.log("clicked on: " + this.props.id);
 					_jquery2.default.ajax({
 						url: '/attendingBar',
 						data: { theID: this.props.id },

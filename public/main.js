@@ -164,6 +164,7 @@ class BarBox extends React.Component {
 			alert("You have already committed to another bar!");
 		}
 		else {
+			console.log("clicked on: " + this.props.id);
 			$.ajax({
 				url:'/attendingBar',
 				data:{theID: this.props.id},
