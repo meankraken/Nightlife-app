@@ -46,9 +46,7 @@ app.get('/', function(req,res) {
 	if (req.user) {
 		if (req.query.auth = "true") {
 			if (req.session.bars) {
-				var temp = req.session.bars; 
-				req.session.bars = "none";
-				res.render('index', { user: req.user.username, bars: temp } );
+				res.render('index', { user: req.user.username, bars: req.session.bars } );
 			}
 			else {
 				res.render('index', { user: req.user.username, bars: "none" } );
@@ -98,6 +96,7 @@ app.post('/', function(req,res) {
 		}
 		else {
 			if (req.user) {
+				req.session.bars = body; //session will store search
 				res.render('index', { user:req.user.username, bars: body });
 			}
 			else {
@@ -199,6 +198,11 @@ app.post('/login', passport.authenticate('local',{
 	
 }));
 
+app.get('/logout', function(req,res) {
+	req.logout();
+	res.redirect('/');
+});
+
 app.get('/register', function(req,res) {
 	if (req.user) {
 		res.render('register', { user:req.user.username });
@@ -220,6 +224,10 @@ app.post('/register', function(req,res) {
 			});
 		}
 	});
+});
+
+app.get('/contact', function(req,res) {
+	res.end("Page under construction.");
 });
 
 app.listen(port);

@@ -11,11 +11,28 @@ head
 		$(document).ready(function() {
 				var name = !{JSON.stringify(user)};
 				if (name.length>0) {
+					var timer;
 					var arr = name.split("");
 					arr[0] = arr[0].toUpperCase();
 					name = arr.join("");
-					var str = "<a href='/profile'>" + name + "</a>";
+					var str = "<a class='userName'>" + name + "</a>";
 					$('.item:nth-child(2)').html(str);
+					
+					$('.userName').hover(function() {
+						$('#logoutBtn').fadeIn();
+					}, function() {
+						timer = setTimeout(function() {
+							$('#logoutBtn').fadeOut();
+						}, 500);
+					});
+					
+					$('#logoutBtn').hover(function() {
+						clearTimeout(timer);
+					}, function() {
+						timer = setTimeout(function() {
+							$('#logoutBtn').fadeOut();
+						}, 500);
+					});
 				}
 			});
 	block headContent
@@ -38,6 +55,8 @@ body
 					a(href='/register') REGISTER
 				div.item 
 					a(href='/contact') CONTACT
+		div#logoutBtn 
+			a(href='/logout') Logout
 		form#locationForm(action='/' method='POST')
 			input.searchBox(name='location' type='text' placeholder='GO')
 	block bodyContent

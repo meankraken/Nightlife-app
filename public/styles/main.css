@@ -177,6 +177,23 @@ input.searchBox {
 	border-color:green;
 }
 
+.userName {
+	cursor:pointer;
+}
+
+#logoutBtn {
+	position:absolute;
+	background-color:#302E2E;
+	height:25px;
+	width:75px;
+	text-align:center;
+	top:45px;
+	right:178px;
+	color:#B8BEBF;
+	font-family:Lato;
+	display:none;
+}
+
 
 
 
