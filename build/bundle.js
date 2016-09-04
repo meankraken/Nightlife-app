@@ -221,6 +221,13 @@
 			key: 'render',
 			value: function render() {
 				var arr = this.state.attendees.slice();
+				if (this.state.bars.length <= 0) {
+					return _react2.default.createElement(
+						'div',
+						{ id: 'entryText' },
+						'Enter your city, state, or zip into the box above to get started.'
+					);
+				}
 				return _react2.default.createElement(
 					'div',
 					null,

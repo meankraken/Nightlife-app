@@ -130,9 +130,7 @@ app.get('/getAttendees', function(req,res) { //api for getting attended bars
 			}
 		});
 		if (docHolder.length==0) {
-			console.log("No docs");
 			var obj = { "payload":"none" };
-			console.log(JSON.stringify(obj));
 			res.end(JSON.stringify(obj));
 		}
 		else {

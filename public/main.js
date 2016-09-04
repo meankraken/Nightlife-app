@@ -145,6 +145,9 @@ class App extends React.Component {
 	
 	render() {
 		var arr = this.state.attendees.slice();
+		if (this.state.bars.length<=0) {
+			return <div id="entryText">Enter your city, state, or zip into the box above to get started.</div>;
+		}
 			return <div>
 				{
 					this.state.bars.map(function(bar) {

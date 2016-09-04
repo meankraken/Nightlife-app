@@ -82,6 +82,13 @@ input.searchBox {
 	top:100px;
 }
 
+#entryText {
+	text-align:center;
+	color:white;
+	font-size:1.9em;
+	margin-top:50px;
+}
+
 #content {
 	background-image: url('/public/imgs/bar.jpg');
 	height:100%;
