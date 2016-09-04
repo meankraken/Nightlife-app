@@ -123,3 +123,7 @@ a:visited {
 .form-horizontal {
 	margin-left:25px;
 }
+
+#logoutBtn {
+	display:none;
+}
