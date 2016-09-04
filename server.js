@@ -114,7 +114,9 @@ app.get('/getAttendees', function(req,res) { //api for getting attended bars
 	var ids = arr.map(function(bar) {
 		return bar.id;
 	});
+	console.log("A");
 	AttendedBar.find({bar_id: { $in: ids }}, function(err, docs) {
+		console.log("B");
 		var day = new Date();
 		var docHolder = [];
 		docs.forEach(function(doc) {
