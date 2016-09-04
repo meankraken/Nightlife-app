@@ -170,31 +170,39 @@
 			key: 'decrementCount',
 			value: function decrementCount(id) {
 				//decrease count of bar with id
-				var index = 0;
-				for (var i = 0; i < this.state.attendees.length; i++) {
-					if (this.state.attendees[i].bar_id == id) {
-						index = i;
+				if (this.state.attendees.length <= 0) {
+					//this.setState({ attendees: [] });
+				} else {
+					var index = 0;
+					for (var i = 0; i < this.state.attendees.length; i++) {
+						if (this.state.attendees[i].bar_id == id) {
+							index = i;
+						}
 					}
+					var arr = this.state.attendees.slice();
+					arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count - 1, date: arr[index].date };
+					this.setState({ attendees: arr.slice(), userAttending: "none" });
 				}
-				var arr = this.state.attendees.slice();
-				arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count - 1, date: arr[index].date };
-				this.setState({ attendees: arr.slice(), userAttending: "none" });
 			}
 		}, {
 			key: 'incrementCount',
 			value: function incrementCount(id) {
 				//increase count of bar with id 
-				var index = 0;
-				for (var i = 0; i < this.state.attendees.length; i++) {
-					if (this.state.attendees[i].bar_id == id) {
-						index = i;
+				if (this.state.attendees.length <= 0) {
+					//this.setState({ attendees: [] });
+				} else {
+					var index = 0;
+					for (var i = 0; i < this.state.attendees.length; i++) {
+						if (this.state.attendees[i].bar_id == id) {
+							index = i;
+						}
 					}
+					var arr = this.state.attendees.slice();
+					console.log(index);
+					console.log(arr);
+					arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count + 1, date: arr[index].date };
+					this.setState({ attendees: arr.slice(), userAttending: id });
 				}
-				var arr = this.state.attendees.slice();
-				console.log(index);
-				console.log(arr);
-				arr[index] = { bar_id: arr[index].bar_id, attendees: arr[index].attendees, count: arr[index].count + 1, date: arr[index].date };
-				this.setState({ attendees: arr.slice(), userAttending: id });
 			}
 		}, {
 			key: 'render',
