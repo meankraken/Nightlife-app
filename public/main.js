@@ -160,7 +160,7 @@ class App extends React.Component {
 								count=item.count;
 							}
 						});
-						return <BarBox rating={bar.rating} num_attending={count} userAttending={this.state.userAttending} snippet={bar.snippet_text} ratingImg={bar.rating_img_url} name={bar.name} url={bar.url} img={bar.image_url} id={bar.id} key={bar.id} decrementCount={this.decrementCount} incrementCount={this.incrementCount} />; 
+						return <BarBox rating={bar.rating} num_attending={count} userAttending={this.state.userAttending} snippet={bar.snippet_text} ratingImg={bar.rating_img_url} url={bar.url} name={bar.name} url={bar.url} img={bar.image_url} id={bar.id} key={bar.id} decrementCount={this.decrementCount} incrementCount={this.incrementCount} />; 
 					}.bind(this))
 				}
 				</ReactCSSTransitionGroup>
@@ -174,7 +174,8 @@ class BarBox extends React.Component {
 		super(props);
 	}
 	
-	attending() { //click event for attending/unattending a bar 
+	attending(event) { //click event for attending/unattending a bar 
+		event.stopPropagation();
 		if (this.props.userAttending!="none" && (this.props.userAttending!=this.props.id)) {
 			alert("You have already committed to another bar!");
 		}
@@ -215,7 +216,7 @@ class BarBox extends React.Component {
 	
 	render() {
 		return (
-			<div className="barBox">
+			<div onClick={(event) => { event.stopPropagation(); window.location=this.props.url;  }.bind(this);} className="barBox">
 				<span className="barName">{this.props.name}</span>
 				<hr/>
 				<img src={this.props.img}/>
