@@ -69,6 +69,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -239,13 +241,15 @@
 						_reactAddonsCssTransitionGroup2.default,
 						{ transitionName: 'example', transitionAppear: true, transitionAppearTimeout: 1000, transitionEnterTimeout: 500, transitionLeaveTimeout: 300 },
 						this.state.bars.map(function (bar) {
+							var _React$createElement;
+	
 							var count = 0;
 							arr.forEach(function (item) {
 								if (item.bar_id == bar.id) {
 									count = item.count;
 								}
 							});
-							return _react2.default.createElement(BarBox, { rating: bar.rating, num_attending: count, userAttending: this.state.userAttending, snippet: bar.snippet_text, ratingImg: bar.rating_img_url, name: bar.name, url: bar.url, img: bar.image_url, id: bar.id, key: bar.id, decrementCount: this.decrementCount, incrementCount: this.incrementCount });
+							return _react2.default.createElement(BarBox, (_React$createElement = { rating: bar.rating, num_attending: count, userAttending: this.state.userAttending, snippet: bar.snippet_text, ratingImg: bar.rating_img_url, url: bar.url, name: bar.name }, _defineProperty(_React$createElement, 'url', bar.url), _defineProperty(_React$createElement, 'img', bar.image_url), _defineProperty(_React$createElement, 'id', bar.id), _defineProperty(_React$createElement, 'key', bar.id), _defineProperty(_React$createElement, 'decrementCount', this.decrementCount), _defineProperty(_React$createElement, 'incrementCount', this.incrementCount), _React$createElement));
 						}.bind(this))
 					)
 				);
@@ -266,8 +270,9 @@
 	
 		_createClass(BarBox, [{
 			key: 'attending',
-			value: function attending() {
+			value: function attending(event) {
 				//click event for attending/unattending a bar 
+				event.stopPropagation();
 				if (this.props.userAttending != "none" && this.props.userAttending != this.props.id) {
 					alert("You have already committed to another bar!");
 				} else {
@@ -306,9 +311,13 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				var _this3 = this;
+	
 				return _react2.default.createElement(
 					'div',
-					{ className: 'barBox' },
+					{ onClick: function onClick() {
+							window.location = _this3.props.url;
+						}, className: 'barBox' },
 					_react2.default.createElement(
 						'span',
 						{ className: 'barName' },

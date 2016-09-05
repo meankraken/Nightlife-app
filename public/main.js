@@ -207,7 +207,7 @@ class BarBox extends React.Component {
 	
 	getClasses() { //set style of the attending button based on if user is going
 		if (this.props.userAttending==this.props.id) {
-			return "goingBtn going";
+			return "goingBtn going"; 
 		}
 		else {
 			return "goingBtn";
@@ -216,7 +216,7 @@ class BarBox extends React.Component {
 	
 	render() {
 		return (
-			<div onClick={(event) => { event.stopPropagation(); window.location=this.props.url;  }.bind(this);} className="barBox">
+			<div onClick={() => { window.location=this.props.url; }} className="barBox">
 				<span className="barName">{this.props.name}</span>
 				<hr/>
 				<img src={this.props.img}/>
