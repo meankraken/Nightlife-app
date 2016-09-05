@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 
 $(document).ready(function() {
 	var timer;
@@ -149,6 +151,7 @@ class App extends React.Component {
 			return <div id="entryText">Enter your city, state, or zip into the box above to get started.</div>;
 		}
 			return <div>
+				<ReactCSSTransitionGroup transitionName="example" transitionAppear={true} transitionAppearTimeout={1000} transitionEnterTimeout={500} transitionLeaveTimeout={300}>
 				{
 					this.state.bars.map(function(bar) {
 						var count = 0;
@@ -160,6 +163,7 @@ class App extends React.Component {
 						return <BarBox rating={bar.rating} num_attending={count} userAttending={this.state.userAttending} snippet={bar.snippet_text} ratingImg={bar.rating_img_url} name={bar.name} url={bar.url} img={bar.image_url} id={bar.id} key={bar.id} decrementCount={this.decrementCount} incrementCount={this.incrementCount} />; 
 					}.bind(this))
 				}
+				</ReactCSSTransitionGroup>
 			</div>;
 		
 	}
