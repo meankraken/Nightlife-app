@@ -37,10 +37,14 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 
-
 var dbURL = process.env.MONGOLAB_URI || 'mongodb://localhost/MyDataBase';
 
 mongoose.connect(dbURL);
+
+const yelp = require('yelp-fusion');
+
+const apiKey = process.env.API_KEY;
+const client = yelp.client(apiKey);
 
 app.get('/', function(req,res) {
 	if (req.user) {
@@ -66,6 +70,7 @@ app.post('/', function(req,res) {
 	var date = Math.floor(Date.now()/1000);
 	var httpRequest = 'GET';
 	
+    /*
 	var yelpUrl = 'http://api.yelp.com/v2/search';
 
 	var apiParams = { 
@@ -106,6 +111,31 @@ app.post('/', function(req,res) {
 		}
 		
 	});
+    */
+
+    const searchRequest = {
+      term:'Bars',
+      location: req.body.location,
+      limit: 7
+    };
+
+    client.search(searchRequest).then(response => {
+      const businesses = response.jsonBody;
+      console.log(businesses);
+      //const prettyJson = JSON.stringify(firstResult, null, 4);
+      
+      if (req.user) {
+            req.session.bars = businesses; //session will store search
+            res.render('index', { user:req.user.username, bars: businesses });
+        }
+        else {
+            req.session.bars = businesses; 
+            res.render('index', { user:"", bars: businesses });
+        }
+      
+    }).catch(e => {
+      console.log(e);
+    });
 	
 });
 

@@ -61,8 +61,9 @@ class App extends React.Component {
 	}
 	
 	componentDidMount() {
-		if (barList!="none") {
-			var bars = JSON.parse(barList);
+		if (barList!="none") {            
+            var bars = barList;
+			//var bars = JSON.parse(barList);
 			var arr = bars.businesses.map(function(item) {
 				return item.id; 
 			});
@@ -219,10 +220,10 @@ class BarBox extends React.Component {
 			<div onClick={() => { window.location=this.props.url; }} className="barBox">
 				<span className="barName">{this.props.name}</span>
 				<hr/>
-				<img src={this.props.img}/>
+				<img style={{height:'75%',width:'120px'}} src={this.props.img}/>
 				<img className="rating" src={this.props.ratingImg}/>
 				<div className="snipBox">
-					<p className="snippet">{this.props.snippet}</p>
+					<p className="snippet">This is where the bar description snippet would go, but Yelp has changed their API recently and no longer includes this. Oh well, here's some filler text.</p>
 				</div>
 				<div onClick={this.attending.bind(this)} className={this.getClasses()}>
 					<span>ATTENDING: </span><span className="counter">{this.props.num_attending}</span>
